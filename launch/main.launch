@@ -1,0 +1,17 @@
+<launch>
+    <arg name="gui" value="true"/>
+
+    <!-- Launch Gazebo  -->
+    <include file="$(find wheelchair_robot)launch/empty_world.launch" />
+
+    <!-- whelchair robot with diff drive -->
+    <include file="$(find wheelchair_robot)/launch/robot.launch">
+        <arg name="robot_name" value="wheelchair" />
+        <arg name="robot_position" value="-x 0.0 -y 0.0 -z 5 -R 0 -P 0 -Y +0.0" />
+    </include>
+
+    <!-- RVIZ w/o arguments == config for rviz-->
+    <node pkg="rviz" type="rviz" name="rviz" />
+    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find multi_robot_scenario)/launch/pioneer3dx.rviz" /> -->
+
+</launch>

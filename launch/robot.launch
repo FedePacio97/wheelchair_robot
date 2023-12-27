@@ -1,0 +1,23 @@
+<launch>
+
+    <arg name="robot_name" default="wheelchair" />
+    <arg name="robot_position" default="-x 0 -y 0 -z 5" />
+
+    <!-- Load the URDF into the ROS Parameter Server, parsing it via xacro -->
+    <param name="robot_description" command="$(find xacro)/xacro '$(find wheelchair_robot)/description/robot.urdf.xacro'" />
+
+    <!-- Run a python script to the send a service call to gazebo_ros to spawn a URDF robot -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model $(arg robot_name) -param robot_description $(arg robot_position) "/>
+
+    <!-- Create a robot_state_publisher node -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+      <param name="publish_frequency" type="double" value="30.0"/>
+      <!--<param name="tf_prefix" type="string" value="$(arg robot_name)"/>-->
+    </node>
+
+    <!-- Create a joint_state_publisher node -->
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher">
+      <param name="publish_frequency" type="double" value="30.0"/>
+    </node>
+
+</launch>

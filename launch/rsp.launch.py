@@ -1,6 +1,7 @@
 import os
+import subprocess
 
-from ament_index_python.packages import get_package_share_directory
+# from ament_index_python.packages import get_package_share_directory
 
 from launch import LaunchDescription
 from launch.substitutions import LaunchConfiguration
@@ -16,7 +17,9 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     # Process the URDF file
-    pkg_path = os.path.join(get_package_share_directory('my_bot'))
+    ros_pack_result = subprocess.run(['rospack', 'find', 'wheelchair_robot'], stdout=subprocess.PIPE)
+    # pkg_path = os.path.join(ros::package::getPath('wheelchair_robot'))
+    pkg_path = os.path.join(ros_pack_result.stdout)
     xacro_file = os.path.join(pkg_path,'description','robot.urdf.xacro')
     robot_description_config = xacro.process_file(xacro_file)
     
