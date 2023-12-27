@@ -18,3 +18,7 @@ Useful info about ROS:
 How URDF works:
 
 ![alt text](img/URDF_process.png "URDF process")
+
+The URDF files are parsed and compacted into a single file by xacro program. The result is given as input to another program called "robot_state_publisher" which let the URDF file be visible on the topic /robot_description so as the joint transform on the /tf topic. 
+The robot_state_publisher expects input of movable joints on /joint_states topic.
+For testing purpose, we can fake the movement by changing the joint using the "joint_state_publisher_gui"
