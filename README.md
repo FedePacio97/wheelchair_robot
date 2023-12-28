@@ -51,10 +51,14 @@ Since the parent link is the chassis, it originates on chassis' origin.
 For this reason, we need to shift it
 ![alt text](img/castor_wheel_shifted.png "castor_wheel_shifted")
 
+Thanks to a plugin for gazebo (ros_diff) we are able to control the robot movement
+![alt text](img/architecture_gazebo.png "gazebo")
+
 Once the launch file has been executed, open Rviz and:
 -) set fixed frame = "base_link"
 -) add TF
 -) add RobotModel (take input from /robot_descritpion)
 -) rosrun joint_state_publisher_gui joint_state_publisher_gui -> to simulated the movement of the rotational joints (in our case the wheels joint)
+-) tosimulate cmd/vel -> rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 For submodules:
 https://git-scm.com/book/en/v2/Git-Tools-Submodules

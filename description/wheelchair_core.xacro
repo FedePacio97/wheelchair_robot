@@ -59,6 +59,10 @@
             <origin xyz="0.15 0 0.075" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
+    <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
+    <gazebo reference="chassis">
+        <material value="Gazebo/White"/>
+    </gazebo>
 
 
     <!-- LEFT WHEEL -->
@@ -89,6 +93,9 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
+    <gazebo reference="left_wheel">
+        <material value="Gazebo/White"/>
+    </gazebo>
 
     <!-- RIGHT WHEEL -->
     <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
@@ -118,6 +125,9 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_cylinder>
     </link>
+    <gazebo reference="right_wheel">
+        <material value="Gazebo/White"/>
+    </gazebo>
 
     <!-- CASTOR WHEEL -->
     <!-- Trick to make it fixed and no friction at all when sliding -->
@@ -143,5 +153,11 @@
             <origin xyz="0 0 0" rpy="0 0 0"/>
         </xacro:inertial_sphere>
     </link>
+    <gazebo reference="caster_wheel">
+        <material value="Gazebo/Black"/>
+        <!-- Trick to make the caster wheel w/o (negligible) friction.. trick -->
+        <mu1 value="0.001"/>
+        <mu2 value="0.001"/>
+    </gazebo>
 
 </robot>

@@ -3,4 +3,6 @@
 
     <xacro:include filename="$(find wheelchair_robot)/description/wheelchair_core.xacro"/>
 
+    <xacro:include filename="$(find wheelchair_robot)/description/gazebo_control.xacro"/>
+
 </robot>
