@@ -2,7 +2,7 @@
     <arg name="gui" value="true"/>
 
     <!-- Launch Gazebo  -->
-    <include file="$(find wheelchair_robot)launch/empty_world.launch" />
+    <include file="$(find wheelchair_robot)/launch/empty_world.launch" />
 
     <!-- whelchair robot with diff drive -->
     <include file="$(find wheelchair_robot)/launch/robot.launch">
@@ -11,7 +11,7 @@
     </include>
 
     <!-- RVIZ w/o arguments == config for rviz-->
-    <node pkg="rviz" type="rviz" name="rviz" />
+    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find wheelchair_robot)/config/view_wheelchair.rviz"/>
     <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find multi_robot_scenario)/launch/pioneer3dx.rviz" /> -->
 
 </launch>
