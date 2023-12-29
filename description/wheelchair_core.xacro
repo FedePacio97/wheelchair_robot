@@ -19,6 +19,10 @@
         <color rgba="0 0 0 1" />
     </material>
 
+    <material name="red">
+        <color rgba="1 0 0 1" />
+    </material>
+
     <!-- It's standard in ros to callthe first link "base_link" -->
     <!-- For differential driver robot, it's position should be between the rotation wheels because makes the calculation easier (insted of the center of the chassis) -->
     

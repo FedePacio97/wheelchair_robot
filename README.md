@@ -54,6 +54,8 @@ For this reason, we need to shift it
 Thanks to a plugin for gazebo (ros_diff) we are able to control the robot movement
 ![alt text](img/architecture_gazebo.png "gazebo")
 
+For lidar, ros provides a message called "sensor_msgs/LaserScan" that abstract the manifacturer of the lidar. The only thing that changes is the driver attached to the lidar.
+
 Once the launch file has been executed, open Rviz and:
 -) set fixed frame = "base_link"
 -) add TF
