@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="wheelchair_wheel" params="side parent chassis_y xyz rpy radius width">
+
+        <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
+        <joint name="${side}_wheel_joint" type="continuous">
+            <parent link="${parent}" />
+            <child link="${side}_wheel" />
+            <!-- By default, the wheel is placed where the base_link is. So, we need to move along y and rotate along x (rpy = roll, pitch, yaw)-->
+            <xacro:if value="${side == 'left'}">
+                <origin xyz="0 ${chassis_y/2 + width/2} 0" rpy="-${pi/2} 0 0"/>
+                <!-- Axis of rotation -> lx wheel (so as rx wheel) spins on z axis. Then, when lx moves forward, it spins anti-clockwise (so +) looking at z when it's pointing out -->
+                <axis xyz="0 0 1" />
+            </xacro:if>
+            <xacro:unless value="${side == 'left'}">
+                <origin xyz="0 -${chassis_y/2 + width/2} 0" rpy="${pi/2} 0 0"/>
+                <!-- Axis of rotation -> rx wheel (so as lx wheel) spins on z axis. Then, when rx moves forward, it spins clockwise (so -) looking at z when it's pointing out -->
+                <axis xyz="0 0 -1" />
+            </xacro:unless>
+            
+        </joint>
+
+        <link name="${side}_wheel">
+            <visual>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+            </collision>
+            <!-- Mass specified by us. x y z, origin taken from visual tag (0 if not specified). -->
+            <xacro:inertial_cylinder mass="0.1" radius="${radius}" length="${width}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+        </link>
+        <gazebo reference="${side}_wheel">
+            <material value="Gazebo/Orange"/>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

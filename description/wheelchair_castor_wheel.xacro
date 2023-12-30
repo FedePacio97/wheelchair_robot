@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="wheelchair_castor_wheel" params="side parent chassis_x chassis_y offset_z xyz rpy radius width">
+
+        <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
+        <joint name="${side}_castor_wheel_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="${side}_castor_wheel" />
+            <!-- By default, the wheel is placed where the base_link is. So, we need to move along y and rotate along x (rpy = roll, pitch, yaw)-->
+            <xacro:if value="${side == 'left'}">
+                <origin xyz="${chassis_x} ${chassis_y/2 + width/2} ${offset_z}" rpy="-${pi/2} 0 0"/>
+            </xacro:if>
+            <xacro:unless value="${side == 'left'}">
+                <origin xyz="${chassis_x} -${chassis_y/2 + width/2} ${offset_z}" rpy="${pi/2} 0 0"/>
+            </xacro:unless>
+            
+        </joint>
+
+        <link name="${side}_castor_wheel">
+            <visual>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <cylinder radius="${radius}" length="${width}"/>
+                </geometry>
+            </collision>
+            <!-- Mass specified by us. x y z, origin taken from visual tag (0 if not specified). -->
+            <xacro:inertial_cylinder mass="0.1" radius="${radius}" length="${width}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_cylinder>
+        </link>
+
+        <gazebo reference="${side}_castor_wheel">
+            <material value="Gazebo/Black"/>
+            <!-- Trick to make the caster wheel w/o (negligible) friction.. trick -->
+            <mu1 value="0.001"/>
+            <mu2 value="0.001"/>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

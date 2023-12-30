@@ -2,6 +2,26 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
     <xacro:include filename="$(find wheelchair_robot)/description/inertial_macros.xacro"/>
+    <xacro:include filename="wheelchair_chassis.xacro"/>
+    <xacro:include filename="wheelchair_wheel.xacro"/>
+    <xacro:include filename="wheelchair_castor_wheel.xacro"/>
+    <xacro:include filename="wheelchair_footrest.xacro"/>
+    <xacro:include filename="wheelchair_lidar.xacro"/>
+    <xacro:include filename="wheelchair_backrest.xacro"/>
+    <xacro:include filename="wheelchair_seat.xacro"/>
+
+    <xacro:property name="chassis_x" value="0.8" />
+    <xacro:property name="chassis_y" value="0.6" />
+    <xacro:property name="chassis_z" value="0.2" />
+    <xacro:property name="seat_x" value="0.6" />
+    <xacro:property name="seat_y" value="0.6" />
+    <xacro:property name="seat_z" value="0.1" />
+    <xacro:property name="footrest_x" value="0.15" />
+    <xacro:property name="footrest_y" value="0.2" />
+    <xacro:property name="footrest_z" value="0.08" />
+    <xacro:property name="backrest_x" value="0.2" />
+    <xacro:property name="backrest_y" value="0.58" />
+    <xacro:property name="backrest_z" value="0.8" />
 
     <material name="white">
         <color rgba="1 1 1 1" />
@@ -27,141 +47,32 @@
     <!-- For differential driver robot, it's position should be between the rotation wheels because makes the calculation easier (insted of the center of the chassis) -->
     
     <!-- BASE LINK -->
-    <link name="base_link">
+    <link name="base_link"/>
 
-    </link>
+    <!-- CHASSIS -->
+    <xacro:wheelchair_chassis name="chassis" parent="base_link" xyz="0 0 0" rpy="0 0 0" chassis_x="${chassis_x}" chassis_y="${chassis_y}" chassis_z="${chassis_z}"/>
 
-
-    <!-- CHASSIS LINK -->
-
-    <!-- Then, there is the chassis that is linked via a joint to the base_link -->
-    <joint name="chassis_joint" type="fixed">
-        <parent link="base_link" />
-        <child link="chassis" />
-        <!-- Often, the chassis is set a little bit behind the centre of the base_link -->
-        <origin xyz="-0.1 0 0" />
-    </joint>
-
-    <link name="chassis">
-        <visual>
-            <!-- Moving half of the lenght forward and half of the height upward -->
-            <origin xyz="0.15 0 0.075"/>
-            <geometry>
-                <box size="0.3 0.3 0.15"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <!-- Moving half of the lenght forward and half of the height upward -->
-            <origin xyz="0.15 0 0.075"/>
-            <geometry>
-                <box size="0.3 0.3 0.15"/>
-            </geometry>
-        </collision>
-        <!-- Mass specified by us. x y z, origin taken from visual tag. -->
-        <xacro:inertial_box mass="0.5" x="0.3" y="0.3" z="0.15">
-            <origin xyz="0.15 0 0.075" rpy="0 0 0"/>
-        </xacro:inertial_box>
-    </link>
-    <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
-    <gazebo reference="chassis">
-        <material value="Gazebo/White"/>
-    </gazebo>
-
-
-    <!-- LEFT WHEEL -->
-    <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
-    <joint name="left_wheel_joint" type="continuous">
-        <parent link="base_link" />
-        <child link="left_wheel" />
-        <!-- By default, the wheel is placed where the base?link is. So, we need to move along y and rotate along x (rpy = roll, pitch, yaw)-->
-        <origin xyz="0 0.175 0" rpy="-${pi/2} 0 0"/>
-        <!-- Axis of rotation -> lx wheel (so as rx wheel) spins on z axis. Then, when lx moves forward, it spins anti-clockwise (so +) looking at z when it's pointing out -->
-        <axis xyz="0 0 1" />
-    </joint>
-
-    <link name="left_wheel">
-        <visual>
-            <geometry>
-                <cylinder radius="0.05" length="0.04"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <geometry>
-                <cylinder radius="0.05" length="0.04"/>
-            </geometry>
-        </collision>
-        <!-- Mass specified by us. x y z, origin taken from visual tag (0 if not specified). -->
-        <xacro:inertial_cylinder mass="0.1" radius="0.05" length="0.04">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_cylinder>
-    </link>
-    <gazebo reference="left_wheel">
-        <material value="Gazebo/White"/>
-    </gazebo>
-
-    <!-- RIGHT WHEEL -->
-    <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
-    <joint name="right_wheel_joint" type="continuous">
-        <parent link="base_link" />
-        <child link="right_wheel" />
-        <!-- By default, the wheel is placed where the base_link is. So, we need to move along y and rotate along x (rpy = roll, pitch, yaw)-->
-        <origin xyz="0 -0.175 0" rpy="${pi/2} 0 0"/>
-        <!-- Axis of rotation -> rx wheel (so as lx wheel) spins on z axis. Then, when rx moves forward, it spins clockwise (so -) looking at z when it's pointing out -->
-        <axis xyz="0 0 -1" />
-    </joint>
-
-    <link name="right_wheel">
-        <visual>
-            <geometry>
-                <cylinder radius="0.05" length="0.04"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <geometry>
-                <cylinder radius="0.05" length="0.04"/>
-            </geometry>
-        </collision>
-        <!-- Mass specified by us. x y z, origin taken from visual tag (0 if not specified). -->
-        <xacro:inertial_cylinder mass="0.1" radius="0.05" length="0.04">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_cylinder>
-    </link>
-    <gazebo reference="right_wheel">
-        <material value="Gazebo/White"/>
-    </gazebo>
+    <!-- WHEELS -->
+    <xacro:wheelchair_wheel side="right" parent="base_link"  chassis_y="${chassis_y}" xyz="0 0 0" rpy="0 0 0" radius="0.27" width="0.1"/>
+    <xacro:wheelchair_wheel side="left"  parent="base_link"  chassis_y="${chassis_y}" xyz="0 0 0" rpy="0 0 0" radius="0.27" width="0.1"/>
 
     <!-- CASTOR WHEEL -->
-    <!-- Trick to make it fixed and no friction at all when sliding -->
-    <joint name="caster_wheel_joint" type="fixed">
-        <parent link="chassis" />
-        <child link="caster_wheel" />
-        <origin xyz="0.24 0 0"/>
-    </joint>
+    <xacro:wheelchair_castor_wheel side="left" parent="chassis"  chassis_x="${chassis_x}" chassis_y="${chassis_y}" offset_z="-0.1" xyz="0 0 0" rpy="0 0 0" radius="0.17" width="0.1"/>
+    <xacro:wheelchair_castor_wheel side="right" parent="chassis"  chassis_x="${chassis_x}" chassis_y="${chassis_y}" offset_z="-0.1" xyz="0 0 0" rpy="0 0 0" radius="0.17" width="0.1"/>
+    
+    <!-- BACKREST -->
+    <xacro:wheelchair_backrest name="backrest" parent="chassis" backrest_x="${backrest_x}" backrest_y="${backrest_y}" backrest_z="${backrest_z}" x="${backrest_x/2}" y="0" z="${backrest_z/2 + chassis_z}" rpy="0 0 0"/>
+    <!-- SEAT -->
+    <xacro:wheelchair_seat name="seat" parent="chassis" seat_x="${seat_x}" seat_y="${seat_y}" seat_z="${seat_z}" x="${backrest_x + seat_x/2}" y="0" z="0.5" rpy="0 0 0"/>
 
-    <link name="caster_wheel">
-        <visual>
-            <geometry>
-                <sphere radius="0.05"/>
-            </geometry>
-            <material name="black"/>
-        </visual>
-        <collision>
-            <geometry>
-                <sphere radius="0.05"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_sphere mass="0.1" radius="0.05">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_sphere>
-    </link>
-    <gazebo reference="caster_wheel">
-        <material value="Gazebo/Black"/>
-        <!-- Trick to make the caster wheel w/o (negligible) friction.. trick -->
-        <mu1 value="0.001"/>
-        <mu2 value="0.001"/>
-    </gazebo>
+    <!-- FOOTREST -->
+    <xacro:wheelchair_footrest side="left" parent="chassis" fr_x="${footrest_x}" fr_y="${footrest_y}" fr_z="${footrest_z}" x="${chassis_x}" y="${chassis_y}" z="${chassis_z}" rpy="0 0 0"/>
+    <xacro:wheelchair_footrest side="right" parent="chassis" fr_x="${footrest_x}" fr_y="${footrest_y}" fr_z="${footrest_z}" x="${chassis_x}" y="${chassis_y}" z="${chassis_z}" rpy="0 0 0"/>
+
+    <!-- LIDAR -->
+    <xacro:wheelchair_lidar name="lidar" parent="chassis" support_x="0.05" support_y="${chassis_y - 2*footrest_y}" support_z="0.025" x="${chassis_x + footrest_x}" y="0" z="${footrest_z}" rpy="0 0 0"/>
+    <!-- lidar support
+    
+    lidar -->
 
 </robot>

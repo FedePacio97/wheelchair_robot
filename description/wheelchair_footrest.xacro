@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="wheelchair_footrest" params="side parent fr_x fr_y fr_z x y z rpy">
+
+        <!-- Usually, we link the wheels to the base_link (and not to the chassis) since easier to deal with -->
+        <joint name="${side}_footrest_joint" type="fixed">
+            <parent link="${parent}" />
+            <child link="${side}_footrest" />
+            <!-- By default, the wheel is placed where the base_link is. So, we need to move along y and rotate along x (rpy = roll, pitch, yaw)-->
+            <xacro:if value="${side == 'left'}">
+                <origin xyz="${x + fr_x/2} ${y/2 - fr_y/2} ${fr_z/2}" rpy="0 0 0"/>
+            </xacro:if>
+            <xacro:unless value="${side == 'left'}">
+                <origin xyz="${x + fr_x/2} -${y/2 - fr_y/2} ${fr_z/2}" rpy="0 0 0"/>
+            </xacro:unless>
+            
+        </joint>
+
+        <link name="${side}_footrest">
+            <visual>
+                <geometry>
+                    <box size="${fr_x} ${fr_y} ${fr_z}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${fr_x} ${fr_y} ${fr_z}"/>
+                </geometry>
+            </collision>
+            <!-- Mass specified by us. x y z, origin taken from visual tag. -->
+            <xacro:inertial_box mass="0.5" x="${fr_x}" y="${fr_y}" z="${fr_z}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_box>
+        </link>
+        <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
+        <gazebo reference="${side}_footrest">
+            <material value="Gazebo/White"/>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

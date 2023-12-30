@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="wheelchair_seat" params="name parent seat_x seat_y seat_z x y z rpy">
+
+        <joint name="${parent}_${name}_joint" type="fixed">
+            <origin xyz="${x} ${y} ${z}" rpy="${rpy}"/>
+            <parent link="${parent}"/>
+            <child link="${name}"/>
+        </joint>
+
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <box size="${seat_x} ${seat_y} ${seat_z}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${seat_x} ${seat_y} ${seat_z}"/>
+                </geometry>
+            </collision>
+            <!-- Mass specified by us. x y z, origin taken from visual tag. -->
+            <xacro:inertial_box mass="0.5" x="${seat_x}" y="${seat_y}" z="${seat_z}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_box>
+        </link>
+        <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
+        <gazebo reference="${name}">
+            <material value="Gazebo/White"/>
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>

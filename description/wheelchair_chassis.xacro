@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:property name="M_PI" value="3.1415926535897931" />
+
+    <xacro:macro name="wheelchair_chassis" params="name parent chassis_x chassis_y chassis_z xyz rpy">
+
+
+    <!-- Then, there is the chassis that is linked via a joint to the base_link -->
+        <joint name="${parent}_${name}_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="${rpy}"/>
+            <parent link="${parent}"/>
+            <child link="${name}"/>
+        </joint>
+
+        <link name="${name}">
+            <visual>
+                <!-- Moving half of the lenght forward and half of the height upward -->
+                <origin xyz="${chassis_x/2} 0 ${chassis_z/2}"/>
+                <geometry>
+                    <box size="${chassis_x} ${chassis_y} ${chassis_z}"/>
+                </geometry>
+                <material name="white"/>
+            </visual>
+            <collision>
+                <!-- Moving half of the lenght forward and half of the height upward -->
+                <origin xyz="${chassis_x/2} 0 ${chassis_z/2}"/>
+                <geometry>
+                    <box size="${chassis_x} ${chassis_y} ${chassis_z}"/>
+                </geometry>
+            </collision>
+            <!-- Mass specified by us. x y z, origin taken from visual tag. -->
+            <xacro:inertial_box mass="0.5" x="${chassis_x}" y="${chassis_y}" z="${chassis_z}">
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </xacro:inertial_box>
+        </link>
+        <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
+        <gazebo reference="${name}">
+            <material value="Gazebo/White"/>
+        </gazebo>
+
+
+  <!-- Chassis -->
+  <!-- <joint name="${parent}_${name}_joint" type="fixed">
+    <origin xyz="${xyz}" rpy="${rpy}"/>
+    <parent link="${parent}"/>
+    <child link="${name}"/>
+  </joint>
+  <link name="${name}">
+    <visual name="chassis_visual">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry name="pioneer_geom">
+        <mesh filename="${meshes}/chassis.stl"/>
+      </geometry>
+      <material name="ChassisRed">
+        <color rgba="0.851 0.0 0.0 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+      <geometry>
+        <mesh filename="${meshes}/chassis.stl"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertial x="0.36" y="0.26"  z="0.18" mass="9.0" />
+  </link>
+  <gazebo reference="${name}">
+    <material value="Gazebo/Red"/>
+  </gazebo> -->
+
+  <!-- Top -->
+  <!-- <joint name="${name}_top_joint" type="fixed">
+    <origin xyz="-0.045 0 0.234" rpy="0 0 0"/>
+    <parent link="${name}"/>
+    <child link="top"/>
+  </joint>
+  <link name="top">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry name="top_geom">
+        <mesh filename="${meshes}/top.stl"/>
+      </geometry>
+      <material name="TopBlack">
+        <color rgba="0.038 0.038 0.038 1.0"/>
+      </material>
+    </visual>
+    <collision>
+    <origin xyz="0.0 0 0.0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="${meshes}/top.stl"/>
+      </geometry>
+    </collision>
+    <xacro:box_inertial x="0.445" y="0.38"  z="0.01" mass="1.0" />
+  </link>
+  <gazebo reference="top">
+    <material value="Gazebo/Black"/>
+  </gazebo> -->
+
+    </xacro:macro>
+
+</robot>
