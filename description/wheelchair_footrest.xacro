@@ -37,7 +37,7 @@
         </link>
         <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
         <gazebo reference="${side}_footrest">
-            <material value="Gazebo/White"/>
+            <material value="Gazebo/DarkGrey"/>
         </gazebo>
 
     </xacro:macro>

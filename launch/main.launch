@@ -1,17 +1,41 @@
 <launch>
     <arg name="gui" value="true"/>
 
-    <!-- Launch Gazebo  -->
-    <include file="$(find wheelchair_robot)/launch/empty_world.launch" />
+    <arg name="world_name" default="empty"/>
+
+    <arg if="$(eval world_name == 'empty')" name="world" value="$(find wheelchair_robot)/worlds/empty.world"/>
+    <arg if="$(eval world_name == 'empty')" name="robot_position" value="-x 0.0 -y 0.0 -z 0.0 -R 0 -P 0 -Y 0.0"/>
+
+    <arg if="$(eval world_name == 'first_test')" name="world" value="$(find wheelchair_robot)/worlds/first_test.world"/>
+    <arg if="$(eval world_name == 'first_test')" name="robot_position" value="-x 0.0 -y -2.5 -z 0.41 -R 0 -P 0 -Y 3.14"/>
+
+    <arg if="$(eval world_name == 'second_test')" name="world" value="$(find wheelchair_robot)/worlds/second_test.world"/>
+    <arg if="$(eval world_name == 'second_test')" name="robot_position" value="-x 0.0 -y -3.5 -z 0.41 -R 0 -P 0 -Y 1.57"/>
+
+    <arg if="$(eval world_name == 'third_test')" name="world" value="$(find wheelchair_robot)/worlds/third_test.world"/>
+    <arg if="$(eval world_name == 'third_test')" name="robot_position" value="-x 0.0 -y -3.5 -z 0.41 -R 0 -P 0 -Y 1.57"/>
+
+    <arg if="$(eval world_name == 'fourth_test')" name="world" value="$(find wheelchair_robot)/worlds/fourth_test.world"/>
+    <arg if="$(eval world_name == 'fourth_test')" name="robot_position" value="-x 0.0 -y -3.5 -z 0.41 -R 0 -P 0 -Y 1.57"/>
+
+    <arg if="$(eval world_name == 'fifth_test')" name="world" value="$(find wheelchair_robot)/worlds/fifth_test.world"/>
+    <arg if="$(eval world_name == 'fifth_test')" name="robot_position" value="-x -3.0 -y -2.0 -z 0.41 -R 0 -P 0 -Y 0"/>
+
+    <arg if="$(eval world_name == 'sixth_test')" name="world" value="$(find wheelchair_robot)/worlds/sixth_test.world"/>
+    <arg if="$(eval world_name == 'sixth_test')" name="robot_position" value="-x -3.0 -y -2.0 -z 0.41 -R 0 -P 0 -Y 0"/>
+
+    <!-- Launch Gazebo  template file (world is taken as argument)-->
+    <include file="$(find wheelchair_robot)/launch/world_template.launch">
+        <arg name="world" value="$(arg world)" />
+    </include>
 
     <!-- whelchair robot with diff drive -->
     <include file="$(find wheelchair_robot)/launch/robot.launch">
         <arg name="robot_name" value="wheelchair" />
-        <arg name="robot_position" value="-x 0.0 -y 0.0 -z 5 -R 0 -P 0 -Y +0.0" />
+        <arg name="robot_position" value="$(arg robot_position)" />
     </include>
 
     <!-- RVIZ w/o arguments == config for rviz-->
     <node pkg="rviz" type="rviz" name="rviz" args="-d $(find wheelchair_robot)/config/view_wheelchair.rviz"/>
-    <!-- <node pkg="rviz" type="rviz" name="rviz" args="-d $(find multi_robot_scenario)/launch/pioneer3dx.rviz" /> -->
 
 </launch>

@@ -62,5 +62,11 @@ Once the launch file has been executed, open Rviz and:
 -) add RobotModel (take input from /robot_descritpion)
 -) rosrun joint_state_publisher_gui joint_state_publisher_gui -> to simulated the movement of the rotational joints (in our case the wheels joint)
 -) tosimulate cmd/vel -> rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
+To launch a test:
+in catkin:
+-) python3 src/wheelchair_robot/launch/robot.gazebo.launch.py <world_name>
+
+
 For submodules:
 https://git-scm.com/book/en/v2/Git-Tools-Submodules

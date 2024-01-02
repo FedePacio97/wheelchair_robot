@@ -29,7 +29,7 @@
         </link>
         <!-- FOR EVERY VISUAL, INCLUDE THE FOLLOWING TO REFLECT IT ON GAZEBO -->
         <gazebo reference="${name}">
-            <material value="Gazebo/White"/>
+            <material value="Gazebo/Grey"/>
         </gazebo>
 
     </xacro:macro>

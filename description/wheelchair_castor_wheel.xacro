@@ -37,7 +37,7 @@
         </link>
 
         <gazebo reference="${side}_castor_wheel">
-            <material value="Gazebo/Black"/>
+            <material value="Gazebo/Orange"/>
             <!-- Trick to make the caster wheel w/o (negligible) friction.. trick -->
             <mu1 value="0.001"/>
             <mu2 value="0.001"/>
