@@ -655,55 +655,10 @@
       </joint>
       <static>0</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>0.02678 -1.54916 0 0 -0 0</pose>
+      <pose>-0.224634 -2.16247 0 0 -0 0</pose>
     </model>
-    <model name='turn_lx_door'>
-      <pose>0.027706 3.08152 0 0 -0 0</pose>
-      <link name='Wall_1'>
-        <collision name='Wall_1_Collision'>
-          <geometry>
-            <box>
-              <size>8 0.15 2.5</size>
-            </box>
-          </geometry>
-          <pose>0 0 1.25 0 -0 0</pose>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='Wall_1_Visual'>
-          <pose>0 0 1.25 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>8 0.15 2.5</size>
-            </box>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Grey</name>
-            </script>
-            <ambient>0.760784 0.662745 0.627451 1</ambient>
-          </material>
-          <meta>
-            <layer>0</layer>
-          </meta>
-        </visual>
-        <pose>-0.016125 0.166675 0 0 -0 3.14159</pose>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
+    <model name='through_door'>
+      <pose>-0.075717 3.39749 0 0 -0 0</pose>
       <link name='Wall_3'>
         <collision name='Wall_3_Collision'>
           <geometry>
@@ -797,46 +752,46 @@
       <static>1</static>
     </model>
     <state world_name='default'>
-      <sim_time>31 914000000</sim_time>
-      <real_time>32 132796155</real_time>
-      <wall_time>1704203267 712780168</wall_time>
-      <iterations>31914</iterations>
+      <sim_time>224 513000000</sim_time>
+      <real_time>226 459738596</real_time>
+      <wall_time>1704298457 238979974</wall_time>
+      <iterations>224513</iterations>
       <model name='delimiter_transparent'>
-        <pose>0.02678 -1.54916 0 0 -0 0</pose>
+        <pose>-0.224634 -2.16247 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <model name='delimiter'>
-          <pose>0.107919 0.80024 0 0 -0 0</pose>
+          <pose>-0.143495 0.18693 0 0 -0 0</pose>
           <scale>1 1 1</scale>
           <link name='Wall_11'>
-            <pose>0.107919 5.72524 0 0 -0 0</pose>
+            <pose>-0.143495 5.11193 0 0 -0 0</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
           </link>
           <link name='Wall_6'>
-            <pose>-4.81708 0.80024 0 0 -0 1.5708</pose>
+            <pose>-5.0685 0.18693 0 0 -0 1.5708</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
           </link>
           <link name='Wall_9'>
-            <pose>5.03292 0.80024 0 0 -0 1.5708</pose>
+            <pose>4.78151 0.18693 0 0 -0 1.5708</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
           </link>
           <link name='link_0'>
-            <pose>0.123924 0.775992 0.089599 0 -0 0</pose>
+            <pose>-0.12749 0.162682 0.089599 0 -0 0</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
           </link>
         </model>
         <model name='wall'>
-          <pose>0.13905 -4.1323 1.26203 0 -0 0</pose>
+          <pose>-0.112364 -4.74561 1.26203 0 -0 0</pose>
           <scale>1 1 1</scale>
           <link name='link_0'>
-            <pose>0.13905 -4.1323 1.26203 0 -0 0</pose>
+            <pose>-0.112364 -4.74561 1.26203 0 -0 0</pose>
             <velocity>0 0 0 0 -0 0</velocity>
             <acceleration>0 0 0 0 -0 0</acceleration>
             <wrench>0 0 0 0 -0 0</wrench>
@@ -853,23 +808,17 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='turn_lx_door'>
-        <pose>0.027706 3.08152 0 0 -0 0</pose>
+      <model name='through_door'>
+        <pose>-0.075717 3.39749 0 0 -0 0</pose>
         <scale>1 1 1</scale>
-        <link name='Wall_1'>
-          <pose>0.011581 3.24819 0 0 -0 3.14159</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
         <link name='Wall_3'>
-          <pose>-2.28841 1.47402 0 0 -0 0</pose>
+          <pose>-2.39184 1.78999 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='Wall_6'>
-          <pose>2.34383 1.47402 0 0 -0 0</pose>
+          <pose>2.2404 1.78999 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -881,7 +830,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>0.562336 -13.1164 14.2965 0 0.907644 1.4082</pose>
+        <pose>-0.081698 -10.9374 10.0463 0 0.739643 1.5642</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

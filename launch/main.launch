@@ -24,6 +24,9 @@
     <arg if="$(eval world_name == 'sixth_test')" name="world" value="$(find wheelchair_robot)/worlds/sixth_test.world"/>
     <arg if="$(eval world_name == 'sixth_test')" name="robot_position" value="-x 0.0 -y -2.0 -z 0.41 -R 0 -P 0 -Y 1.57"/>
 
+    <arg if="$(eval world_name == 'training_arena')" name="world" value="$(find wheelchair_robot)/worlds/training_arena.world"/>
+    <arg if="$(eval world_name == 'training_arena')" name="robot_position" value="-x 0.0 -y -2.0 -z 0.41 -R 0 -P 0 -Y 1.57"/>
+
     <!-- Launch Gazebo  template file (world is taken as argument)-->
     <include file="$(find wheelchair_robot)/launch/world_template.launch">
         <arg name="world" value="$(arg world)" />
